@@ -3,6 +3,16 @@
 #include"addition.h"
 #include"matrix.h"
 
+/*
+ Функция подготавливает данные для дальнейшей отправки в "функцию-калькулятор" сложения
+ и отправляет данные в функцию для вывода информации в текстовый файл
+
+ @param mtr_1 [in]
+ @param mtr_2 [in]
+ @param res [in]
+
+ */
+
 void addition(char *mtr_1, char *mtr_2, char *res)
 {
     FILE *f1 = fopen(mtr_1, "r");
@@ -40,6 +50,16 @@ void addition(char *mtr_1, char *mtr_2, char *res)
     fclose(f2);
     fclose(f3);
 }
+
+/*
+ Функция складывает две матрицы
+
+ @param mtrx1 [in]
+ @param mtrx2 [in]
+ @param result [in]
+ @param row [in]
+ @param column [in]
+ */
 
 void addition_mtrx(float **mtrx1, float **mtrx2, float **result,  int row, int column)
 {

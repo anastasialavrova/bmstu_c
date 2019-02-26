@@ -1,0 +1,10 @@
+Sweden; Malmo; 95000
+Denmark; Copenhagen; 120000
+Sweden; Stockholm; 150000
+China; Shanghai; 60000
+Mexico; Mexico City; 40000
+Oman; Muskat; 50000
+Turkey; Istambul; 15000
+Lithuania; Vilnius; 25000
+Portugal; Lisbon; 55000
+Mongolia; UlaanBaatar; 15000

@@ -2,6 +2,17 @@
 #include"check.h"
 #include"matrix.h"
 #include"multiplication.h"
+#include"print.h"
+
+/*
+ Функция подготавливает данные для дальнейшей отправки в "функцию-калькулятор" умножения
+ и отправляет данные в функцию для вывода информации в текстовый файл
+
+ @param mtr_1 [in]
+ @param mtr_2 [in]
+ @param res [in]
+
+ */
 
 void multiplicaion(char *mtr_1, char *mtr_2, char *res)
 {
@@ -24,14 +35,7 @@ void multiplicaion(char *mtr_1, char *mtr_2, char *res)
         {
             float **result = new_matrix(row1, column1);
             mult_mtrx(mtrx1, mtrx2, result, row1, column1, column2);
-            for (int i = 0; i < row1; i++)
-            {
-                for (int j = 0; j < column1; j++)
-                {
-                    fprintf(f3, "%f ", result[i][j]);
-                }
-                fprintf(f3, "\n");
-            }
+            print_matrix(f3, result, row1, column2);
         }
         else
             printf("Error!");
@@ -40,6 +44,17 @@ void multiplicaion(char *mtr_1, char *mtr_2, char *res)
     fclose(f2);
     fclose(f3);
 }
+
+/*
+ Функция умножает две матрицы
+
+ @param mtrx1 [in]
+ @param mtr2 [in]
+ @param result [in]
+ @param row1 [in]
+ @param column1 [in]
+ @param column2 [in]
+ */
 
 void mult_mtrx(float **mtrx1, float **mtrx2, float **result,  int row1, int column1, int column2)
 {

@@ -1,9 +1,10 @@
 #include<stdio.h>
 #include<stdlib.h>
-//#include "check.h"
 
 /*
 Функция проверки количества элементов подаваемой консольной строки
+
+ @param argc [in]
 */
 int check_string(int argc)
 {
@@ -18,8 +19,8 @@ int check_string(int argc)
 
 /*
 Функция проверки существования данных в файле
+ @param f_input [in]
 */
-
 
 int check_file(FILE *f_input)
 {
@@ -33,17 +34,5 @@ int check_file(FILE *f_input)
 }
 
 
-/*
-int check_calloc(int *a)
-{
-	if (a == NULL)
-	{
-		printf("Malloc error.\nSize: %d", size);
-		return -2;
-	}
-	else
-		return 0;
-}
-*/
 
 

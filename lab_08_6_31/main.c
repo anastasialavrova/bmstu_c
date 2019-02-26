@@ -7,6 +7,15 @@
 #include"info.h"
 #include"inverse_matrix.h"
 
+/*
+    Функция принимает на вход файлы ив зависимости от указанного действия, перенаправляет на другие функции
+
+    @param argc [in]
+    @param argv [in]
+
+    @return возвращает 0, если программа выполнила все действия корректно
+ */
+
 int main(int argc, char *argv[])
 {
     int error = check_string(argc);

@@ -1,5 +1,8 @@
 #include<stdio.h>
 
+/*
+ Функция вывода информации о программе
+ */
 void info(void)
 {
     printf("Performed by Lavrova Anastasia, IU7-35B\n"

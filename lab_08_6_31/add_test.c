@@ -5,6 +5,10 @@
 #include"matrix.h"
 #include"addition.h"
 
+/*
+  Функция проверяет работу функции сложения двух матриц
+ */
+
 int add_test()
 {
     char mtr1[] = "mtr_1_test.txt";
@@ -27,7 +31,7 @@ int pre_add_test(char *mtr1, char *mtr2, char *res)
 {
     FILE *f1 = fopen(mtr1, "r");
     FILE *f2 = fopen(mtr2, "r");
-    FILE *f3 = fopen(res, "w");
+    FILE *f3 = fopen(res, "r");
     int row1, row2, column1, column2, flag = 1;
     float x;
     fscanf(f1, "%d", &row1);
@@ -44,16 +48,14 @@ int pre_add_test(char *mtr1, char *mtr2, char *res)
     read_mtrx(f1, mtrx1, row1, column1);
     read_mtrx(f2, mtrx2, row2, column2);
 
-
     addition_mtrx(mtrx1, mtrx2, result, row1, column1);
-
 
     for (int i = 0; i < row1; i++)
     {
         for (int j = 0; j < column1; j++)
         {
             fscanf(f3, "%f", &x);
-            printf("%f %f", x, result[i][j]);
+            printf("%f %f\n", x, result[i][j]);
             if (x != result[i][j])
             {
                 printf("Mistake of addition!");

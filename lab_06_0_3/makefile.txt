@@ -1,0 +1,25 @@
+func.o: func.c
+	gcc -c func.c -o func.o
+
+main.o: main.c
+	gcc -c main.c -o main.o
+
+main: func.c main.c
+	gcc -c func.c -o func.o
+	gcc -c main.c -o main.o
+	gcc -o main.exe func.o main.o
+
+test.exe: test.c func.c
+	gcc -c func.c -o func.o
+	gcc -c test.c -o test.o
+	gcc -o test.exe func.o test.o
+	./test.exe
+
+app.exe: func.c main.c
+	gcc -c func.c -o func.o
+	gcc -c main.c -o main.o
+	gcc -o main.exe func.o main.o
+	./main.exe
+
+clean:
+	rm *.o *.exe

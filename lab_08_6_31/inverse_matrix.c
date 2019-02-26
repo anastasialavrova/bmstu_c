@@ -4,6 +4,15 @@
 #include"check.h"
 #include"matrix.h"
 #include"inverse_matrix.h"
+#include"print.h"
+
+/*
+ Функция подготавливает данные для дальнейшего превращения в обратную матрицу
+ и отправляет данные в функцию для вывода информации в текстовый файл
+
+ @param mtr_1 [in]
+ @param res [in]
+ */
 
 void inverse_matrix(char *mtr_1, char *res)
 {
@@ -21,14 +30,7 @@ void inverse_matrix(char *mtr_1, char *res)
         int res = inverse_Gauss(mtrx1, row1, result);
         if (res == 0)
         {
-            for (int i = 0; i < row1; i++)
-            {
-                for (int j = 0; j < column1; j++)
-                {
-                fprintf(f2, "%f ", result[i][j]);
-                }
-                fprintf(f2, "\n");
-            }
+            print_matrix(f2, result, row1, column1);
         }
         else
             fprintf(f2, "Matrix determinant is zero!");
@@ -37,39 +39,38 @@ void inverse_matrix(char *mtr_1, char *res)
     fclose(f2);
 }
 
+/*
+ функция подсчитывается обратную матрицу методом Гаусса
 
-int Gauss(float **matrica_a, int n, float *massiv_b, float *x)
+ @param matrica_a [in]
+ @param n [in]
+ @param massiv_b [in]
+ @param x [in]
+ @param flag [out]
+
+ @return
+ */
+
+
+int gauss(float **matrica_a, int n, float *massiv_b, float *x)
 {
-    int i, j, k, r;
+    int i, j, k, r, result = 0;
     float c, M, max, s, **a, *b;
     a = new_matrix(n, n);
-    for (i = 0; i<n; i++)
-        a[i] = (float*)calloc(n, sizeof(float));
     b = (float*)calloc(n, sizeof(float));
-    for (i = 0; i<n; i++)
-        for (j = 0; j<n; j++)
-            a[i][j] = matrica_a[i][j];
-    for (i = 0; i<n; i++)
-        b[i] = massiv_b[i];
-    for (k = 0; k<n; k++)
+    copy_matrix(n, a, matrica_a);
+    copy_mass(n, b, massiv_b);
+    for (i=0, k = 0; k<n; k++)
     {
         max = fabs(a[k][k]);
         r = k;
-        for (i = k + 1; i<n; i++)
-            if (fabs(a[i][k])>max)
-            {
-                max = fabs(a[i][k]);
-                r = i;
-            }
+        int i1 = 0;
+        max = max_elem(a[i1], max, &r, k + 1, n);
         for (j = 0; j<n; j++)
         {
-            c = a[k][j];
-            a[k][j] = a[r][j];
-            a[r][j] = c;
+            swap_float(&a[k][j], &a[r][j]);
         }
-        c = b[k];
-        b[k] = b[r];
-        b[r] = c;
+        swap_float(&b[k], &b[r]);
         for (i = k + 1; i<n; i++)
         {
             for (M = a[i][k] / a[k][k], j = k; j<n; j++)
@@ -78,30 +79,42 @@ int Gauss(float **matrica_a, int n, float *massiv_b, float *x)
         }
 
     }
+
     if (a[n - 1][n - 1] == 0)
         if (b[n - 1] == 0)
-            return-1;
+            result = -1;
         else
-            return-2;
+            result = -2;
     else
-        {
+    {
         for (i = n - 1; i >= 0; i--){
             for (s = 0, j = i + 1; j<n; j++)
                 s += a[i][j] * x[j];
             x[i] = (b[i] - s) / a[i][i];
         }
-        return 0;
+        result = 0;
     }
 
-    for (i = 0; i<n; i++)
-        free(a[i]);
-    free(a);
-    free(b);
+    return result;
 
 }
 
-int inverse_Gauss(float **a, int n, float **y){
-    int i, j, res;
+/*
+ Функция принимает на вход матрицу, создает вспомогательные массивы, перенаправляет
+ матрицу в "функцию-калькулятор"
+
+ @param a [in]
+ @param n [in]
+ @param y [in]
+ @param flag [out]
+
+ @return возвращает 0, если получилось создать обратную матрицу (определитель не равен нулю), и
+ возвращает -1 в ином случае
+ */
+
+int inverse_Gauss(float **a, int n, float **y)
+{
+    int i, j, res, flag = 0;
     float *b, *x;
     b = (float*)calloc(n, sizeof(float));
     x = (float*)calloc(n, sizeof(float));
@@ -112,7 +125,7 @@ int inverse_Gauss(float **a, int n, float **y){
                 b[j] = 1;
             else
                 b[j] = 0;
-        res = Gauss(a, n, b, x);
+        res = gauss(a, n, b, x);
         if (res != 0)
             break;
         else
@@ -124,10 +137,13 @@ int inverse_Gauss(float **a, int n, float **y){
     free(x);
     free(b);
 
-
     if (res != 0)
-        return -1;
+        flag = -1;
     else
-        return 0;
+        flag = 0;
+
+    return flag;
 }
+
+
 
